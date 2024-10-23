@@ -64,6 +64,10 @@ def clean_title(movie: str) -> str:
         'Princess Bride'
         >>> clean_title("it's a wonderful life")
         'It's A Wonderful Life'
+        >>> clean_title("harry  pOtter")
+        'Harry Potter'
+        >>> clean_title("   twIlIghT    ")
+        'Twilight'
 
     See:
         https://docs.python.org/3/library/string.html#helper-functions
@@ -105,6 +109,10 @@ def convert_str_movie_tuple(val: str) -> Tuple[str, int]:
         ('Princess Bride', 10)
         >>> convert_str_movie_tuple("   JurAssic shARk  ,    1  ")
         ('Jurassic Shark', 1)
+        >>> convert_str_movie_tuple(" twIliGht,   2")
+        ('Twilight', 2)
+        >>> convert_str_movie_tuple(" parks   and ReC,   6   ")
+        ('Parks And Rec', 6)
 
     Args:
         val (str): String in the format of "movie,rating"
@@ -124,6 +132,20 @@ def convert_rating(val: int, min_stars: int = __MIN_STARS, max_stars: int = __MA
     to the rating. Any value over max_stars will only
     return max_stars stars, and any value under min_stars
     will return min_stars star.
+    For Example: 
+        >>> convert_rating(0)
+        '*'
+        >>> convert_rating(6)
+        '*****'
+        >>> convert_rating(5)
+        '*****'
+        >>> convert_rating(1)
+        '*'
+        >>> convert_rating(10, 1, 10)
+        '**********'
+        >>> convert_rating(1, 2, 10)
+        '**'    
+
 
     Args:
         val (int): the rating value
@@ -172,6 +194,12 @@ def check_filter(movie: Tuple[str, int], filter: str) -> bool:
         >>> check_filter(("Princess Bride", 10), "!= 10")
         False
         >>> check_filter(("Princess Bride", 10), "")
+        True
+        >>> check_filter(("Princess Bride", 10), "> 4")
+        True
+        >>> check_filter(("Princess Bride", 10), "> 10")
+        False
+        >>> check_filter(("Princess Bride", 10), ">= 10")
         True
 
 
@@ -255,6 +283,9 @@ def check_filter(movie: Tuple[str, int], filter: str) -> bool:
             return True
         else:
             return False
+
+
+check_filter(("Princess Bride", 10), ">= 10")
 
 
 def print_movies(movies: List[Tuple[str, int]], filter: str = '', spacer: int = __SPACER, max_stars: int = __MAX_STARS) -> None:
